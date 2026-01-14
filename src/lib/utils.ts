@@ -53,7 +53,7 @@ export const distribute = <T>(xs: T[], ys: T[]): T[] => {
     }
 
     if (xs.length === 0) {
-        return [...ys];
+        return ys.slice();
     }
 
     const result = new Array<T>(xs.length + ys.length);
@@ -205,14 +205,17 @@ export const tryOrNull = <T>(func: () => T): T | null => {
 
 export const uniqueBy = <T, K>(arr: T[], func: (e: T) => K): T[] => {
     const seen = new Map<K, T>();
+    const result: T[] = [];
+    
     for (let i = arr.length - 1; i >= 0; i--) {
         const key = func(arr[i]);
         if (!seen.has(key)) {
             seen.set(key, arr[i]);
+            result.push(arr[i]);
         }
     }
 
-    return Array.from(seen.values()).reverse();
+    return result.reverse();
 };
 
 /*
@@ -243,7 +246,13 @@ export const persisted = <T>(key: string, initialValue: T): Writable<T> => {
     const value = localStorage.getItem(key);
 
     const store = writable<T>(value ? JSON.parse(value) : initialValue);
+    // Skip the initial subscription call to avoid writing the same value back
+    let skipFirst = true;
     store.subscribe((v) => {
+        if (skipFirst) {
+            skipFirst = false;
+            return;
+        }
         localStorage.setItem(key, JSON.stringify(v));
     });
     return store;
@@ -627,10 +636,14 @@ for (const [start, end] of [
     }
 }
 
-export const escapeNonPrintable = (str: string): string =>
-    Array.from(str)
-        .map((c) => npEscapes.get(c) ?? c)
-        .join("");
+export const escapeNonPrintable = (str: string): string => {
+    let result = "";
+    for (let i = 0; i < str.length; i++) {
+        const c = str[i];
+        result += npEscapes.get(c) ?? c;
+    }
+    return result;
+};
 
 /* dates */
 

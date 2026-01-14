@@ -49,14 +49,7 @@
 
             try {
                 const task = search(entries, { type, value, mode, ref }, (r) => {
-                    const newResults = [...results, r];
-                    if (mode === SearchMode.PARTIAL_MATCH) {
-                        // sort results by closeness to query
-                        // shorter results are considered closer matches
-                        newResults.sort((a, b) => a.value.length - b.value.length);
-                    }
-
-                    results = newResults;
+                    results = [...results, r];
                 });
 
                 cancelSearch = () => {
@@ -64,6 +57,13 @@
                     cancelSearch = null;
                 };
                 await task;
+                
+                // Sort results once at the end instead of on each update
+                if (mode === SearchMode.PARTIAL_MATCH) {
+                    // sort results by closeness to query
+                    // shorter results are considered closer matches
+                    results.sort((a, b) => a.value.length - b.value.length);
+                }
             } catch (e) {
                 error("failed to search", e);
                 toast.error($t("toast.error.title.generic"), {

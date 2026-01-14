@@ -142,7 +142,13 @@ export const classes = derived(entries, ($entries) => {
     );
 });
 
-export const classRefs = derived(classes, ($classes) => Array.from($classes.keys()).map(refFromName));
+export const classRefs = derived(classes, ($classes) => {
+    const refs = [];
+    for (const key of $classes.keys()) {
+        refs.push(refFromName(key));
+    }
+    return refs;
+});
 
 export interface LoadResult {
     entry: Entry;
@@ -160,7 +166,7 @@ const readZip = async (blob: Blob): Promise<Zip> => {
         case "skip": {
             // skip duplicates with nonsensical sizes
             const toSkip = new Set<ZipEntry>();
-            for (const duplicates of Array.from(entries.values())) {
+            for (const duplicates of entries.values()) {
                 if (duplicates.length <= 1) {
                     continue;
                 }
@@ -176,7 +182,7 @@ const readZip = async (blob: Blob): Promise<Zip> => {
         case "overwrite": {
             // keep only the last duplicate
             const toKeep = new Set<ZipEntry>();
-            for (const duplicates of Array.from(entries.values())) {
+            for (const duplicates of entries.values()) {
                 toKeep.add(duplicates[duplicates.length - 1]);
             }
 
@@ -185,7 +191,7 @@ const readZip = async (blob: Blob): Promise<Zip> => {
         }
         case "rename": {
             // rename duplicates
-            for (const duplicates of Array.from(entries.values())) {
+            for (const duplicates of entries.values()) {
                 if (duplicates.length <= 1) {
                     continue;
                 }

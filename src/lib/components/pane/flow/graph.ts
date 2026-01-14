@@ -19,15 +19,26 @@ export type ControlFlowNodeData = {
 const monoFF = `ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace`;
 
 const canvas = document.createElement("canvas");
+const textSizeCache = new Map<string, TextMetrics>();
+
 const computeTextSize = (text: string, font: string): TextMetrics => {
     if (text.length === 0) {
         return { width: 0 } as TextMetrics;
     }
 
+    const cacheKey = `${font}:${text}`;
+    const cached = textSizeCache.get(cacheKey);
+    if (cached) {
+        return cached;
+    }
+
     const context = canvas.getContext("2d")!;
     context.font = font;
 
-    return context.measureText(text);
+    const metrics = context.measureText(text);
+    textSizeCache.set(cacheKey, metrics);
+    
+    return metrics;
 };
 
 const commonOptions = {
