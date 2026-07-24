@@ -4,8 +4,8 @@ A modern Java reverse engineering tool for the web.
 
 ![](./assets/slicer.png)
 
-| Sponsored by 💖                                                                                   |                                                                                                                |
-| ------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+|                                          Sponsored by 💖                                          |                                                                                                                |
+| :-----------------------------------------------------------------------------------------------: | -------------------------------------------------------------------------------------------------------------- |
 | [<img src="https://cdn.modrinth.com/logo.svg" width="64" alt="Modrinth" />](https://modrinth.com) | Discover, play, and create enjoyable and quality Minecraft mods on Modrinth, the open source modding platform. |
 
 ## Features
