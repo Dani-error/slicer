@@ -1,3 +1,15 @@
+<script lang="ts" module>
+    type Sponsor = { name: string; logo: string; url: string };
+
+    export const SPONSORS: Sponsor[] = [
+        {
+            name: "Modrinth",
+            logo: "https://cdn.modrinth.com/logo.svg",
+            url: "https://modrinth.com",
+        },
+    ];
+</script>
+
 <script lang="ts">
     import { Dialog, DialogContent } from "$lib/components/ui/dialog";
     import type { ModalProps } from "svelte-modals";
@@ -44,6 +56,18 @@
                 <p class="mt-6 font-mono text-sm">
                     {navigator.userAgent}
                 </p>
+                <div class="mt-2 flex flex-col gap-1">
+                    <div class="text-sponsor-pink text-sm">
+                        {$t("dialog.about.sponsored-by")}
+                    </div>
+                    <div class="flex flex-row gap-1">
+                        {#each SPONSORS as { name, logo, url }}
+                            <a href={url} target="_blank" title={name}>
+                                <img src={logo} alt={name} class="h-8 w-8 rounded-full" />
+                            </a>
+                        {/each}
+                    </div>
+                </div>
             </div>
         </div>
         <p class="text-muted-foreground mt-2 text-center text-sm">
