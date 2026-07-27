@@ -194,7 +194,12 @@ expose({
             entryPoints.push(EntryPointType.MINECRAFT_VELOCITY);
         }
 
-        const forgeMod = annotations.some((a) => a.typeEntry?.string === "Lnet/minecraftforge/fml/common/Mod;");
+        // TODO(zlataovce): separate NeoForge into a category of its own?
+        const forgeMod = annotations.some(
+            (a) =>
+                a.typeEntry?.string === "Lnet/minecraftforge/fml/common/Mod;" ||
+                a.typeEntry?.string === "Lnet/neoforged/fml/common/Mod;"
+        );
         if (forgeMod) {
             entryPoints.push(EntryPointType.MINECRAFT_FORGE);
         }
