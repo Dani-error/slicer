@@ -36,15 +36,25 @@ import {
 import { AnalysisState, analyze } from "$lib/workspace/analysis";
 import { mappings } from "$lib/workspace/analysis/mapping";
 import { mappingSet } from "$lib/workspace/analysis/mapping/data";
-import { DataType, memoryData, type MemoryData, unwrapTransforms } from "$lib/workspace/data";
+import {
+    DataType,
+    type FileData,
+    memoryData,
+    type MemoryData,
+    unwrapTransforms,
+    type ZipData,
+} from "$lib/workspace/data";
 import { write as writeMappings } from "$lib/writer/mappings";
 import type {
+    ArchiveEntryMetadata,
     DisassemblerContext,
     EditorContext,
+    EntryMetadata,
     Event,
     EventListener,
     EventMap,
     EventType,
+    FileMetadata,
     I18NContext,
     MappingContext,
     NotificationContext,
@@ -93,6 +103,32 @@ export const displayName = (proto: ProtoScript): string => {
 
 export const scripts = writable<ProtoScript[]>([]);
 
+export const wrapMetadata = (e: Entry): EntryMetadata => {
+    const unwrappedData = unwrapTransforms(e.data);
+    switch (unwrappedData.type) {
+        case DataType.FILE:
+            return {
+                type: "file",
+                size: unwrappedData.size,
+                lastModified: new Date((unwrappedData as FileData).file.lastModified),
+            } as FileMetadata;
+        case DataType.ZIP: {
+            const zipEntry = (unwrappedData as ZipData).entry;
+
+            return {
+                type: "archive_entry",
+                size: unwrappedData.size,
+                lastModified: zipEntry.lastModDate,
+                uncompressedSize: zipEntry.uncompressedSize,
+                compressionMethod: zipEntry.compressionMethod,
+                crc32: zipEntry.crc32,
+            } as ArchiveEntryMetadata;
+        }
+    }
+
+    return { type: "unknown", size: unwrappedData.size };
+};
+
 export const wrapEntry = (e: Entry): ScriptEntry => {
     return {
         _entry: e,
@@ -100,6 +136,7 @@ export const wrapEntry = (e: Entry): ScriptEntry => {
             return e.type;
         },
         name: e.name,
+        meta: wrapMetadata(e),
         bytes(): Promise<Uint8Array> {
             return unwrapTransforms(e.data).bytes();
         },

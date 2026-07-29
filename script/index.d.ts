@@ -203,6 +203,65 @@ export interface EventMap {
 }
 
 /**
+ * A type of entry metadata.
+ */
+export type EntryMetadataType = "archive_entry" | "file" | "unknown";
+
+/**
+ * Metadata for a workspace entry.
+ */
+export interface EntryMetadata {
+    /**
+     * The type of the metadata.
+     */
+    readonly type: EntryMetadataType;
+    /**
+     * The (approximate) size of the entry in bytes.
+     */
+    readonly size: number;
+}
+
+/**
+ * Metadata for an archive entry unpacked from an archive into the workspace.
+ */
+export interface ArchiveEntryMetadata extends EntryMetadata {
+    readonly type: "archive_entry";
+
+    /**
+     * Last modification date of the entry reported by the archive's metadata.
+     */
+    readonly lastModified: Date;
+    /**
+     * Uncompressed size of the entry reported by the archive's metadata.
+     *
+     * For the compressed size, use {@link EntryMetadata#size}.
+     */
+    readonly uncompressedSize: number;
+    /**
+     * The compression method of the entry reported by the archive's metadata.
+     *
+     * This is likely `0` (Stored/no compression) or `8` (Deflate).
+     */
+    readonly compressionMethod: number;
+    /**
+     * The CRC value of the archive entry.
+     */
+    readonly crc32: number;
+}
+
+/**
+ * Metadata for a file stored on the host's filesystem.
+ */
+export interface FileMetadata extends EntryMetadata {
+    readonly type: "file";
+
+    /**
+     * Last modification date of the file.
+     */
+    readonly lastModified: Date;
+}
+
+/**
  * An entry in the workspace, which can be opened in a tab.
  */
 export interface Entry {
@@ -214,6 +273,10 @@ export interface Entry {
      * The unique name of the entry (e.g. "HelloWorld.class", "lib/example.jar", etc.).
      */
     readonly name: string;
+    /**
+     * Metadata associated with the entry.
+     */
+    readonly meta: EntryMetadata;
 
     /**
      * Returns the raw data of the entry as a byte array.

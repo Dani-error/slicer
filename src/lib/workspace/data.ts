@@ -48,6 +48,7 @@ export const enum DataType {
 export interface Data extends BlobLike {
     type: DataType;
     name: string;
+    size: number;
 }
 
 export interface FileData extends Data {
@@ -60,6 +61,7 @@ export const fileData = (file: File): FileData => {
         type: DataType.FILE,
         name: file.name,
         file: file,
+        size: file.size,
         stream(): Promise<ReadableStream<Uint8Array>> {
             return Promise.resolve(file.stream());
         },
@@ -91,6 +93,7 @@ export const zipData = async (zip: Zip): Promise<ZipData[]> => {
                     name: escapeNonPrintable(v.fileName || v.name),
                     parent: zip,
                     entry: v,
+                    size: v.compressedSize,
                     async stream(): Promise<ReadableStream<Uint8Array>> {
                         return (await v.blob()).stream();
                     },
@@ -123,6 +126,7 @@ export const memoryData = (
         type: DataType.MEMORY,
         name,
         data,
+        size: data instanceof Blob ? data.size : data.length,
         async stream(): Promise<ReadableStream<Uint8Array>> {
             if (data instanceof Blob) {
                 return data.stream();
