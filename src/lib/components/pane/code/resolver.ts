@@ -63,7 +63,7 @@ export const resolveType = (
             if (resolution?.kind === "declared" && resolution.declaration) {
                 view.dispatch({
                     selection: { anchor: resolution.declaration.from },
-                    effects: EditorView.scrollIntoView(resolution.declaration.from),
+                    effects: EditorView.scrollIntoView(resolution.declaration.from, { y: "center" }),
                 });
             } else if (className) {
                 const entry = classes.get(className);
