@@ -23,6 +23,8 @@ export interface TabData {
 }
 
 export type ProjectMode = "file" | "package";
+export type WorkspaceSearchSort = "name" | "size" | "last-mod";
+export type WorkspaceSearchSortDirection = "asc" | "desc" | "auto";
 export type DuplicateEntryHandling = "skip" | "overwrite" | "rename";
 export type ImageSmoothingMode = "auto" | "on" | "off";
 
@@ -30,6 +32,12 @@ export const locale = persisted<string>(root, "locale", new Intl.Locale(navigato
 export const themeColor = persisted<string>(root, "theme.color", "zinc");
 export const themeRadius = persisted<number>(root, "theme.radius", 0.5);
 export const projectMode = persisted<ProjectMode>(root, "project.mode", "file");
+export const commandWorkspaceSearchSort = persisted<WorkspaceSearchSort>(root, "command.workspace.search.sort", "name");
+export const commandWorkspaceSearchSortDir = persisted<WorkspaceSearchSortDirection>(
+    root,
+    "command.workspace.search.sort.dir",
+    "auto"
+);
 export const workspacePreventUnload = persisted<boolean>(root, "workspace.prevent-unload", true);
 export const workspaceEncoding = persisted<string>(root, "workspace.encoding", "utf-8");
 export const workspaceArchiveEncoding = persisted<string>(root, "workspace.archive.encoding", "utf-8");
