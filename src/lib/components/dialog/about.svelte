@@ -16,27 +16,17 @@
     import { t } from "$lib/i18n";
 
     let { isOpen, close }: ModalProps = $props();
-
-    let imageId = $state(Math.floor(Math.random() * 4));
-    const changeImage = () => {
-        imageId++;
-        if (imageId > 3) {
-            imageId = 0; // wrap around
-        }
-    };
 </script>
 
 <Dialog bind:open={isOpen} onOpenChangeComplete={(open) => open || close()}>
     <DialogContent class="flex flex-col justify-between">
         <div class="grid grid-cols-2 gap-4">
-            <div>
-                <a href="https://www.pixiv.net/en/artworks/93602463">
-                    <img src={`/assets/fumo/${imageId}.png`} alt="Artwork" title="by horeyearth" />
-                </a>
+            <div class="justify-center items-center flex">
+                <img src={`/logo.svg`} alt="slicer" draggable="false" title="courtesy of @danibcastro" />
             </div>
             <div>
                 <p class="text-2xl">
-                    <button class="mr-1 cursor-help font-semibold" onclick={changeImage}>
+                    <button class="mr-1 font-semibold">
                         {$t("dialog.about.brand")}
                     </button>
                 </p>

@@ -1,6 +1,36 @@
-# slicer [![](https://img.shields.io/badge/documentation-here-red)](https://docs.slicer.run) [![](https://img.shields.io/badge/translate-here-red?logo=crowdin)](https://crowdin.com/project/slicer)
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/header/dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="./assets/header/light.svg">
+    <img src="./assets/header/light.svg" alt="Slicer" width="100%">
+  </picture>
+</p>
 
-A modern Java reverse engineering tool for the web.
+---
+
+<br>
+
+<p align="center">
+  <a href="https://docs.slicer.run">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="./assets/documentation-button/dark.svg">
+      <source media="(prefers-color-scheme: light)" srcset="./assets/documentation-button/light.svg">
+      <img src="./assets/documentation-button/light.svg" alt="Documentation">
+    </picture>
+  </a>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="https://crowdin.com/project/slicer">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="./assets/translate-button/dark.svg">
+      <source media="(prefers-color-scheme: light)" srcset="./assets/translate-button/light.svg">
+      <img src="./assets/translate-button/light.svg" alt="Translate">
+    </picture>
+  </a>
+</p>
+
+<br>
+
+<p align="center"><i>A modern Java reverse engineering tool for the web.</i></p>
 
 ![](./assets/slicer.png)
 
