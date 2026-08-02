@@ -10,23 +10,29 @@
 
 <br>
 
-<p align="center">
-  <a href="https://docs.slicer.run">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="./assets/documentation-button/dark.svg">
-      <source media="(prefers-color-scheme: light)" srcset="./assets/documentation-button/light.svg">
-      <img src="./assets/documentation-button/light.svg" alt="Documentation">
-    </picture>
-  </a>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <a href="https://crowdin.com/project/slicer">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="./assets/translate-button/dark.svg">
-      <source media="(prefers-color-scheme: light)" srcset="./assets/translate-button/light.svg">
-      <img src="./assets/translate-button/light.svg" alt="Translate">
-    </picture>
-  </a>
-</p>
+<table align="center">
+  <tr>
+    <td>
+      <a href="https://docs.slicer.run">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="./assets/documentation-button/dark.svg">
+          <source media="(prefers-color-scheme: light)" srcset="./assets/documentation-button/light.svg">
+          <img src="./assets/documentation-button/light.svg" alt="Documentation">
+        </picture>
+      </a>
+    </td>
+    <td/>
+    <td>
+      <a href="https://crowdin.com/project/slicer">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="./assets/translate-button/dark.svg">
+          <source media="(prefers-color-scheme: light)" srcset="./assets/translate-button/light.svg">
+          <img src="./assets/translate-button/light.svg" alt="Translate">
+        </picture>
+      </a>
+    </td>
+  </tr>
+</table>
 
 <br>
 
